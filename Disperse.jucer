@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="f9Pygz" name="Disperse" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="UO1CCr" name="Disperse">
+    <GROUP id="{9B3F26F7-68A8-32BA-64FD-37BC56EE735A}" name="Source">
+      <GROUP id="{2EFE68B8-16CC-00E4-16F9-A5AFA86601A8}" name="DSP">
+        <FILE id="VcTfqZ" name="CircularBuffer.cpp" compile="1" resource="0"
+              file="Source/DSP/CircularBuffer.cpp"/>
+        <FILE id="ad2xm0" name="CircularBuffer.hpp" compile="0" resource="0"
+              file="Source/DSP/CircularBuffer.hpp"/>
+        <FILE id="cLi0CA" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Delay.cpp"/>
+        <FILE id="RPWVLF" name="Delay.hpp" compile="0" resource="0" file="Source/DSP/Delay.hpp"/>
+        <FILE id="HVZqwR" name="DSPMath.cpp" compile="1" resource="0" file="Source/DSP/DSPMath.cpp"/>
+        <FILE id="t3UTcY" name="DSPMath.hpp" compile="0" resource="0" file="Source/DSP/DSPMath.hpp"/>
+        <FILE id="qiVgqc" name="Math.cpp" compile="1" resource="0" file="Source/DSP/Math.cpp"/>
+        <FILE id="Od1tB5" name="Math.hpp" compile="0" resource="0" file="Source/DSP/Math.hpp"/>
+        <FILE id="cKrVVr" name="Oscillator.cpp" compile="1" resource="0" file="Source/DSP/Oscillator.cpp"/>
+        <FILE id="nATh1V" name="Oscillator.hpp" compile="0" resource="0" file="Source/DSP/Oscillator.hpp"/>
+      </GROUP>
+      <GROUP id="{6F5663D7-7886-1957-5C22-13F5164D50A9}" name="Effects">
+        <FILE id="JJIo9d" name="Disperse.cpp" compile="1" resource="0" file="Source/Effects/Disperse.cpp"/>
+        <FILE id="vntGuz" name="Disperse.hpp" compile="0" resource="0" file="Source/Effects/Disperse.hpp"/>
+        <FILE id="xMiCCR" name="Vibrato.cpp" compile="1" resource="0" file="Source/Effects/Vibrato.cpp"/>
+        <FILE id="sinCJm" name="Vibrato.hpp" compile="0" resource="0" file="Source/Effects/Vibrato.hpp"/>
+      </GROUP>
+      <GROUP id="{CC02B565-6035-4E2C-F8E5-439236E712F5}" name="Tests">
+        <FILE id="XgvXZl" name="CircularBufferTest.cpp" compile="1" resource="0"
+              file="Source/Tests/CircularBufferTest.cpp"/>
+        <FILE id="sX7Syo" name="CircularBufferTest.hpp" compile="0" resource="0"
+              file="Source/Tests/CircularBufferTest.hpp"/>
+        <FILE id="ZmCVox" name="DSPMathTest.cpp" compile="1" resource="0" file="Source/Tests/DSPMathTest.cpp"/>
+        <FILE id="f7rXVc" name="DSPMathTest.hpp" compile="0" resource="0" file="Source/Tests/DSPMathTest.hpp"/>
+        <FILE id="daxfqa" name="Tests.hpp" compile="0" resource="0" file="Source/Tests/Tests.hpp"/>
+      </GROUP>
+      <GROUP id="{9E534434-7D68-1EDB-12F9-1C82A2B74C93}" name="UI">
+        <FILE id="eCqRnI" name="MainComponent.cpp" compile="1" resource="0"
+              file="Source/UI/MainComponent.cpp"/>
+        <FILE id="XqgOXS" name="MainComponent.hpp" compile="0" resource="0"
+              file="Source/UI/MainComponent.hpp"/>
+      </GROUP>
+      <GROUP id="{0095AE07-C882-4D2E-8EFF-407E7DB782BA}" name="Utils">
+        <FILE id="JCqonH" name="Types.cpp" compile="1" resource="0" file="Source/Utils/Types.cpp"/>
+        <FILE id="u02dKt" name="Types.hpp" compile="0" resource="0" file="Source/Utils/Types.hpp"/>
+      </GROUP>
+      <FILE id="heUs7M" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="WUTqtr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="RNWvd8" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="PS3haV" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Disperse"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Disperse"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+</JUCERPROJECT>

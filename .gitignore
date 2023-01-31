@@ -1,0 +1,12 @@
+.DS_Store
+
+*.pbxuser
+*.perspectivev3
+*.xcbkptlist
+*.xccheckout
+xcuserdata
+
+/Builds
+**/Builds
+**/JuceLibraryCode
+

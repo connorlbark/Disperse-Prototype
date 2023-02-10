@@ -29,6 +29,6 @@ inline stereofloat sinPan(stereofloat in, float pan) {
   float gainL = sin((1 - crossValue)*juce::MathConstants<float>::halfPi);
   float gainR = sin(crossValue*juce::MathConstants<float>::halfPi);
 
-  return stereofloat(in.L() * gainL, in.R() * gainR);
+  return stereofloat(in.L * gainL, in.R * gainR);
 }
 #endif /* Math_hpp */

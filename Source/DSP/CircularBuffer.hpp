@@ -9,22 +9,22 @@
 #define CircularBuffer_hpp
 
 #include <JuceHeader.h>
-#include <vector>
+#include "../Utils/Types.hpp"
 
 template <typename T>
 class CircularBuffer: public juce::AudioBuffer<T> {
 private:
   int circularBufferIdx = 0; // defaults to the beginning of the buffer.
+  int numSamples = 0;
+  
+//  float * L;
+//  float * R;
   
   int mapCircularIdxToBufferIdx(int numSamplesAgo) {
     int bufferSamplesAgo = this->circularBufferIdx - numSamplesAgo - 1;
-    while (bufferSamplesAgo < 0) {
-      bufferSamplesAgo += this->getNumSamples();
-    };
-    while (bufferSamplesAgo >= this->getNumSamples()) {
-      bufferSamplesAgo -= this->getNumSamples();
-    };
-    return bufferSamplesAgo;
+
+    int modResult = bufferSamplesAgo % numSamples;
+    return modResult >= 0 ? modResult : modResult+numSamples;
   };
   
   void incrementCircularIndex() {
@@ -43,8 +43,11 @@ private:
   }
 public:
   
-  CircularBuffer(int channels, int samples): juce::AudioBuffer<float>(channels, samples) {
+  CircularBuffer(int samples): juce::AudioBuffer<float>(2, samples) {
+    this->numSamples = samples;
     this->initialize();
+//    this-> L = this->getWritePointer(0);
+//    this-> R = this->getWritePointer(1);
   }
 
   /**
@@ -54,32 +57,25 @@ public:
       channel: channel to read from
       numSamplesAgo: number of samples in the past from the current time.
    */
-  T readCircular(int channel, int numSamplesAgo) {
+  stereofloat readCircular(int numSamplesAgo) {
     int bufferIdx = this->mapCircularIdxToBufferIdx(numSamplesAgo);
     
-    return this->getSample(channel, bufferIdx);
+    const float * bufL = this->getReadPointer(0);
+    const float * bufR = this->getReadPointer(1);
+
+    
+    return stereofloat(*(bufL+bufferIdx), *(bufR+bufferIdx));
   };
 
-  /**
-   WriteCircular: Writes to the circular buffer, and updates the internal index.
-   
-   Inputs:
-     in - Expects enough input samples to fill up all channels
-   
-   If given less channels, then the rest of the channels will be filled with 0.0. If given too many, the extra channels will be ignored.
-   */
-  void writeCircular(const std::vector<T> in) {
-    for (int channelIdx = 0; channelIdx < this->getNumChannels(); channelIdx++) {
-      float sample = 0.f;
-      if (channelIdx < in.size()) {
-        sample = in[channelIdx];
-      }
-      
-      this->setSample(channelIdx, this->circularBufferIdx, sample);
-    }
-    
+  void writeCircular(float L, float R) {
+    float * bufL = this->getWritePointer(0);
+    float * bufR = this->getWritePointer(1);
+
+    *(bufL + this->circularBufferIdx) = L;
+    *(bufR + this->circularBufferIdx) = L;
+
     incrementCircularIndex();
-  };
+  }
 
 };
 

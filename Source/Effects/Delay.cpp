@@ -10,7 +10,7 @@
 #include "../DSP/Saturation.hpp"
 #include <algorithm>
 
-Delay::Delay() : buf(0, 0), vibrato() {
+Delay::Delay() : buf(0), vibrato() {
   
 };
 
@@ -23,7 +23,7 @@ void Delay::initialize(float sampleRate, float maxTimeMs) {
   this->sampleRate = sampleRate;
   int maxTimeSamps = msToSamps(sampleRate, maxTimeMs);
   
-  buf = CircularBuffer<float>(2, maxTimeSamps);
+  buf = CircularBuffer<float>(maxTimeSamps);
   
   // max vibrato is 15ms back
   vibrato.initialize(msToSamps(sampleRate, 15.f));
@@ -65,25 +65,26 @@ void Delay::setMix(float mix) {
 
 stereofloat Delay::fxLoop(stereofloat in) {
   in = this->vibrato.process(in);
-  
-  return stereofloat(softClip(in.L(), 0.7), softClip(in.R(), 0.7));
+
+
+  return stereofloat(softClip(in.L, 0.7), softClip(in.R, 0.7));
+//  return in;
 }
 
 stereofloat Delay::process(stereofloat in) {
   
-  stereofloat delayedValue =
-              stereofloat(
-                this->buf.readCircular(0, this->timeSamps),
-                this->buf.readCircular(1, this->timeSamps));
+//  std::cout << this->timeSamps << " " << this->feedback << std::endl;
+  
+  stereofloat delayedValue = this->buf.readCircular(this->timeSamps);
            
-  stereofloat dryFeedback = stereofloat((in.L() + delayedValue.L()) * this->feedback, (in.R() + delayedValue.R()) * this->feedback);
-  
+  stereofloat dryFeedback = stereofloat(in.L + (delayedValue.L) * this->feedback, in.R + (delayedValue.R) * this->feedback);
+
   dryFeedback = sinPan(dryFeedback, this->pan);
-  this->buf.writeCircular({dryFeedback.L(), dryFeedback.R()});
-  
+  this->buf.writeCircular(dryFeedback.L, dryFeedback.R);
+
   
   stereofloat wet = this->fxLoop(delayedValue);
-  return stereofloat(wet.L() * mix + in.L() * (1-mix),
-                     wet.R() * mix + in.R() * (1-mix));
+  return stereofloat(wet.L * mix + in.L * (1-mix),
+                     wet.R * mix + in.R * (1-mix));
   
 }

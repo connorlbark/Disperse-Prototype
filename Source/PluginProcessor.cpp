@@ -24,12 +24,21 @@ DisperseAudioProcessor::DisperseAudioProcessor()
                        )
 #endif
 {
-  addParameter (time = new juce::AudioParameterFloat ("mix", "Mix", 0.0, 1.0, 0.30));
-  addParameter (time = new juce::AudioParameterFloat ("time", "Delay Time (ms)", 30.0, 10000.0, 0.5));
-  addParameter (feedback = new juce::AudioParameterFloat ("feedback", "Feedback (%)", 0.0, 1.0, 0.5));
-  addParameter (spread = new juce::AudioParameterFloat ("spread", "Stereo Spread", 0.0, 1.0, 0.0));
-  addParameter (dispersion = new juce::AudioParameterFloat ("dispersion", "Dispersion", 0.0, 1.0, 0.0));
-  addParameter (numVoices = new juce::AudioParameterInt ("numVoices", "Number of Delay Voices", 0, 8, 4));
+  addParameter (mix = new juce::AudioParameterFloat (MIX_PARAM_ID, "Mix", 0.0, 1.0, 0.30));
+  addParameter (time = new juce::AudioParameterFloat (TIME_PARAM_ID, "Delay Time (ms)", 50.0, MAX_DELAY_TIME - MAX_TIME_SPREAD, 600.0));
+  addParameter (feedback = new juce::AudioParameterFloat (FEEDBACK_PARAM_ID, "Feedback (%)", 0.0, 1.0, 0.5));
+  addParameter (spread = new juce::AudioParameterFloat (SPREAD_PARAM_ID, "Stereo Spread", 0.0, 1.0, 0.2));
+  addParameter (dispersion = new juce::AudioParameterFloat (DISPERSION_PARAM_ID, "Dispersion", 0.0, 1.0, 0.2));
+  addParameter (numVoices = new juce::AudioParameterInt (NUM_VOICES_PARAM_ID, "Number of Delay Voices", 0, 8, 4));
+  addParameter (seed = new juce::AudioParameterInt (SEED_PARAM_ID, "Random Seed", 1, 100000, 1234));
+  
+  this->mix->addListener(this);
+  this->time->addListener(this);
+  this->feedback->addListener(this);
+  this->spread->addListener(this);
+  this->dispersion->addListener(this);
+  this->numVoices->addListener(this);
+  this->seed->addListener(this);
 }
 
 DisperseAudioProcessor::~DisperseAudioProcessor()
@@ -110,9 +119,13 @@ void DisperseAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
   juce::UnitTestRunner testRunner;
   testRunner.runAllTests();
   
-
-  this->effect.initialize(sampleRate);
-
+  this->effect.initialize(sampleRate, 1234);
+  
+  auto parameters = this->getParameters();
+  for (int i = 0; i < parameters.size(); i ++) {
+    auto parameter = parameters[i];
+    this->parameterValueChanged(parameter->getParameterIndex(), parameter->getValue());
+  }
 }
 
 void DisperseAudioProcessor::releaseResources()
@@ -172,8 +185,8 @@ void DisperseAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     for (int i = 0; i < buffer.getNumSamples(); i++) {
       stereofloat val = this->effect.process(stereofloat(buffer.getSample(0, i), buffer.getSample(1, i)));
             
-      buffer.setSample(0, i, val.L());
-      buffer.setSample(1, i, val.R());
+      buffer.setSample(0, i, val.L);
+      buffer.setSample(1, i, val.R);
     }
 
 }
@@ -208,4 +221,35 @@ void DisperseAudioProcessor::setStateInformation (const void* data, int sizeInBy
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new DisperseAudioProcessor();
+}
+
+
+void DisperseAudioProcessor::parameterValueChanged (int parameterIndex, float val) {
+
+  if (parameterIndex == this->time->getParameterIndex()) {
+    this->effect.setTimeMs(this->time->get());
+
+  } else if (parameterIndex == this->mix->getParameterIndex()) {
+    this->effect.setMix(this->mix->get());
+
+  } else if (parameterIndex == this->feedback->getParameterIndex()) {
+    this->effect.setFeedback(this->feedback->get());
+
+  } else if (parameterIndex == this->spread->getParameterIndex()) {
+    this->effect.setSpread(this->spread->get());
+
+  } else if (parameterIndex == this->dispersion->getParameterIndex()) {
+    this->effect.setDispersion(this->dispersion->get());
+
+  } else if (this->numVoices->getParameterIndex()) {
+    this->effect.setVoiceArrangement(std::vector<int>(this->numVoices->get(), 1));
+
+  } else if (this->seed->getParameterIndex()) {
+    this->effect.setRandomSeed(this->seed->get());
+
+  }
+}
+
+void DisperseAudioProcessor::parameterGestureChanged (int parameterIndex, bool gestureIsStarting)  {
+  
 }

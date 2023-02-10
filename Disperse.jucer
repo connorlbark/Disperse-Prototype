@@ -3,52 +3,102 @@
 <JUCERPROJECT id="f9Pygz" name="Disperse" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="UO1CCr" name="Disperse">
-    <GROUP id="{9B3F26F7-68A8-32BA-64FD-37BC56EE735A}" name="Source">
-      <GROUP id="{2EFE68B8-16CC-00E4-16F9-A5AFA86601A8}" name="DSP">
-        <FILE id="VcTfqZ" name="CircularBuffer.cpp" compile="1" resource="0"
+    <GROUP id="{8B229636-9152-FAC2-BB1E-6F5FCC49DFBF}" name="Resources">
+      <GROUP id="{865F06C6-F228-F1FB-6E40-F8801360C33B}" name="Knob">
+        <FILE id="VwnDPK" name="knob1.png" compile="0" resource="1" file="Resources/Knob/knob1.png"/>
+        <FILE id="R30zg9" name="knob2.png" compile="0" resource="1" file="Resources/Knob/knob2.png"/>
+        <FILE id="Ixxk22" name="knob3.png" compile="0" resource="1" file="Resources/Knob/knob3.png"/>
+        <FILE id="QdgKbc" name="knob4.png" compile="0" resource="1" file="Resources/Knob/knob4.png"/>
+        <FILE id="yLfHvS" name="knob5.png" compile="0" resource="1" file="Resources/Knob/knob5.png"/>
+        <FILE id="Tx5ncT" name="knob6.png" compile="0" resource="1" file="Resources/Knob/knob6.png"/>
+        <FILE id="czcha1" name="knob7.png" compile="0" resource="1" file="Resources/Knob/knob7.png"/>
+        <FILE id="QSobhC" name="knob8.png" compile="0" resource="1" file="Resources/Knob/knob8.png"/>
+        <FILE id="kkMFbp" name="knob9.png" compile="0" resource="1" file="Resources/Knob/knob9.png"/>
+        <FILE id="qEwCVd" name="knob10.png" compile="0" resource="1" file="Resources/Knob/knob10.png"/>
+        <FILE id="WiU73p" name="knob11.png" compile="0" resource="1" file="Resources/Knob/knob11.png"/>
+        <FILE id="dk46wf" name="knob12.png" compile="0" resource="1" file="Resources/Knob/knob12.png"/>
+        <FILE id="gS2p4I" name="knob13.png" compile="0" resource="1" file="Resources/Knob/knob13.png"/>
+        <FILE id="CPie95" name="knob14.png" compile="0" resource="1" file="Resources/Knob/knob14.png"/>
+        <FILE id="tkxJRL" name="knob15.png" compile="0" resource="1" file="Resources/Knob/knob15.png"/>
+        <FILE id="obIxtf" name="knob16.png" compile="0" resource="1" file="Resources/Knob/knob16.png"/>
+        <FILE id="M2rno8" name="knob17.png" compile="0" resource="1" file="Resources/Knob/knob17.png"/>
+        <FILE id="lC2JCE" name="knob18.png" compile="0" resource="1" file="Resources/Knob/knob18.png"/>
+        <FILE id="fD7P2X" name="knob19.png" compile="0" resource="1" file="Resources/Knob/knob19.png"/>
+        <FILE id="w79yHq" name="knob20.png" compile="0" resource="1" file="Resources/Knob/knob20.png"/>
+        <FILE id="rEk9qD" name="knob21.png" compile="0" resource="1" file="Resources/Knob/knob21.png"/>
+        <FILE id="xvQSpM" name="knob22.png" compile="0" resource="1" file="Resources/Knob/knob22.png"/>
+        <FILE id="yQW1Qx" name="knob23.png" compile="0" resource="1" file="Resources/Knob/knob23.png"/>
+        <FILE id="fIH6qK" name="knob24.png" compile="0" resource="1" file="Resources/Knob/knob24.png"/>
+        <FILE id="fNP73z" name="knob25.png" compile="0" resource="1" file="Resources/Knob/knob25.png"/>
+        <FILE id="ZskxSs" name="knob26.png" compile="0" resource="1" file="Resources/Knob/knob26.png"/>
+        <FILE id="ZEuPhM" name="knob27.png" compile="0" resource="1" file="Resources/Knob/knob27.png"/>
+        <FILE id="Y8xxS0" name="knob28.png" compile="0" resource="1" file="Resources/Knob/knob28.png"/>
+        <FILE id="Ae79Uz" name="knob29.png" compile="0" resource="1" file="Resources/Knob/knob29.png"/>
+        <FILE id="Qw2KIF" name="knob30.png" compile="0" resource="1" file="Resources/Knob/knob30.png"/>
+        <FILE id="P78F57" name="knob31.png" compile="0" resource="1" file="Resources/Knob/knob31.png"/>
+        <FILE id="NyEeLN" name="knob32.png" compile="0" resource="1" file="Resources/Knob/knob32.png"/>
+        <FILE id="nEX4uw" name="knob33.png" compile="0" resource="1" file="Resources/Knob/knob33.png"/>
+        <FILE id="F2bI8Q" name="knob34.png" compile="0" resource="1" file="Resources/Knob/knob34.png"/>
+      </GROUP>
+    </GROUP>
+    <GROUP id="{17952466-7819-FC03-2654-F160F1B5CDFE}" name="Source">
+      <GROUP id="{8364F0CB-2A18-3A50-65A8-28553CDF138D}" name="DSP">
+        <FILE id="xByZ5p" name="CircularBuffer.cpp" compile="1" resource="0"
               file="Source/DSP/CircularBuffer.cpp"/>
-        <FILE id="ad2xm0" name="CircularBuffer.hpp" compile="0" resource="0"
+        <FILE id="wI4CiY" name="CircularBuffer.hpp" compile="0" resource="0"
               file="Source/DSP/CircularBuffer.hpp"/>
-        <FILE id="cLi0CA" name="Delay.cpp" compile="1" resource="0" file="Source/DSP/Delay.cpp"/>
-        <FILE id="RPWVLF" name="Delay.hpp" compile="0" resource="0" file="Source/DSP/Delay.hpp"/>
-        <FILE id="HVZqwR" name="DSPMath.cpp" compile="1" resource="0" file="Source/DSP/DSPMath.cpp"/>
-        <FILE id="t3UTcY" name="DSPMath.hpp" compile="0" resource="0" file="Source/DSP/DSPMath.hpp"/>
-        <FILE id="qiVgqc" name="Math.cpp" compile="1" resource="0" file="Source/DSP/Math.cpp"/>
-        <FILE id="Od1tB5" name="Math.hpp" compile="0" resource="0" file="Source/DSP/Math.hpp"/>
-        <FILE id="cKrVVr" name="Oscillator.cpp" compile="1" resource="0" file="Source/DSP/Oscillator.cpp"/>
-        <FILE id="nATh1V" name="Oscillator.hpp" compile="0" resource="0" file="Source/DSP/Oscillator.hpp"/>
+        <FILE id="uxMyKo" name="DSPMath.cpp" compile="1" resource="0" file="Source/DSP/DSPMath.cpp"/>
+        <FILE id="vgxueD" name="DSPMath.hpp" compile="0" resource="0" file="Source/DSP/DSPMath.hpp"/>
+        <FILE id="A07Qva" name="Math.cpp" compile="1" resource="0" file="Source/DSP/Math.cpp"/>
+        <FILE id="MwfxtB" name="Math.hpp" compile="0" resource="0" file="Source/DSP/Math.hpp"/>
+        <FILE id="wuAYHB" name="Oscillator.cpp" compile="1" resource="0" file="Source/DSP/Oscillator.cpp"/>
+        <FILE id="o7KgFp" name="Oscillator.hpp" compile="0" resource="0" file="Source/DSP/Oscillator.hpp"/>
+        <FILE id="ito2uY" name="Saturation.cpp" compile="1" resource="0" file="Source/DSP/Saturation.cpp"/>
+        <FILE id="odhXTC" name="Saturation.hpp" compile="0" resource="0" file="Source/DSP/Saturation.hpp"/>
       </GROUP>
-      <GROUP id="{6F5663D7-7886-1957-5C22-13F5164D50A9}" name="Effects">
-        <FILE id="JJIo9d" name="Disperse.cpp" compile="1" resource="0" file="Source/Effects/Disperse.cpp"/>
-        <FILE id="vntGuz" name="Disperse.hpp" compile="0" resource="0" file="Source/Effects/Disperse.hpp"/>
-        <FILE id="xMiCCR" name="Vibrato.cpp" compile="1" resource="0" file="Source/Effects/Vibrato.cpp"/>
-        <FILE id="sinCJm" name="Vibrato.hpp" compile="0" resource="0" file="Source/Effects/Vibrato.hpp"/>
+      <GROUP id="{18F9B60A-096D-6659-829A-4302C1DD46C0}" name="Effects">
+        <FILE id="hli4md" name="Delay.cpp" compile="1" resource="0" file="Source/Effects/Delay.cpp"/>
+        <FILE id="VlsM4Z" name="Delay.hpp" compile="0" resource="0" file="Source/Effects/Delay.hpp"/>
+        <FILE id="VMGMLl" name="Disperse.cpp" compile="1" resource="0" file="Source/Effects/Disperse.cpp"/>
+        <FILE id="THz2F0" name="Disperse.hpp" compile="0" resource="0" file="Source/Effects/Disperse.hpp"/>
+        <FILE id="inMMSC" name="Vibrato.cpp" compile="1" resource="0" file="Source/Effects/Vibrato.cpp"/>
+        <FILE id="OtGAlZ" name="Vibrato.hpp" compile="0" resource="0" file="Source/Effects/Vibrato.hpp"/>
       </GROUP>
-      <GROUP id="{CC02B565-6035-4E2C-F8E5-439236E712F5}" name="Tests">
-        <FILE id="XgvXZl" name="CircularBufferTest.cpp" compile="1" resource="0"
+      <GROUP id="{4100A2E4-E88F-F5C5-7407-73E56423413C}" name="Tests">
+        <FILE id="tuWNe7" name="CircularBufferTest.cpp" compile="1" resource="0"
               file="Source/Tests/CircularBufferTest.cpp"/>
-        <FILE id="sX7Syo" name="CircularBufferTest.hpp" compile="0" resource="0"
+        <FILE id="xCNb4o" name="CircularBufferTest.hpp" compile="0" resource="0"
               file="Source/Tests/CircularBufferTest.hpp"/>
-        <FILE id="ZmCVox" name="DSPMathTest.cpp" compile="1" resource="0" file="Source/Tests/DSPMathTest.cpp"/>
-        <FILE id="f7rXVc" name="DSPMathTest.hpp" compile="0" resource="0" file="Source/Tests/DSPMathTest.hpp"/>
-        <FILE id="daxfqa" name="Tests.hpp" compile="0" resource="0" file="Source/Tests/Tests.hpp"/>
+        <FILE id="G4BPQ3" name="DSPMathTest.cpp" compile="1" resource="0" file="Source/Tests/DSPMathTest.cpp"/>
+        <FILE id="qh2puI" name="DSPMathTest.hpp" compile="0" resource="0" file="Source/Tests/DSPMathTest.hpp"/>
+        <FILE id="B1HkMJ" name="SaturationTest.cpp" compile="1" resource="0"
+              file="Source/Tests/SaturationTest.cpp"/>
+        <FILE id="kqeibT" name="SaturationTest.hpp" compile="0" resource="0"
+              file="Source/Tests/SaturationTest.hpp"/>
+        <FILE id="SLQYzg" name="Tests.hpp" compile="0" resource="0" file="Source/Tests/Tests.hpp"/>
       </GROUP>
-      <GROUP id="{9E534434-7D68-1EDB-12F9-1C82A2B74C93}" name="UI">
-        <FILE id="eCqRnI" name="MainComponent.cpp" compile="1" resource="0"
+      <GROUP id="{A74F51DF-F1C6-98E8-3E33-80D7BF8BBE92}" name="UI">
+        <GROUP id="{9892D4E7-1EE6-416E-DFBB-3E3B5816AE45}" name="Components">
+          <GROUP id="{1A48F8B4-4BE8-A5B4-B959-F3794912EDDF}" name="LookAndFeel">
+            <FILE id="huggal" name="Knob.cpp" compile="1" resource="0" file="Source/UI/Components/LookAndFeel/Knob.cpp"/>
+            <FILE id="NBZAwM" name="Knob.hpp" compile="0" resource="0" file="Source/UI/Components/LookAndFeel/Knob.hpp"/>
+          </GROUP>
+        </GROUP>
+        <FILE id="EoUAOZ" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/UI/MainComponent.cpp"/>
-        <FILE id="XqgOXS" name="MainComponent.hpp" compile="0" resource="0"
+        <FILE id="X0XITy" name="MainComponent.hpp" compile="0" resource="0"
               file="Source/UI/MainComponent.hpp"/>
       </GROUP>
-      <GROUP id="{0095AE07-C882-4D2E-8EFF-407E7DB782BA}" name="Utils">
-        <FILE id="JCqonH" name="Types.cpp" compile="1" resource="0" file="Source/Utils/Types.cpp"/>
-        <FILE id="u02dKt" name="Types.hpp" compile="0" resource="0" file="Source/Utils/Types.hpp"/>
+      <GROUP id="{36DAC9D0-026F-6D8F-DB2B-C19D90772EA5}" name="Utils">
+        <FILE id="lZsRZZ" name="Types.cpp" compile="1" resource="0" file="Source/Utils/Types.cpp"/>
+        <FILE id="Ilxs7Z" name="Types.hpp" compile="0" resource="0" file="Source/Utils/Types.hpp"/>
       </GROUP>
-      <FILE id="heUs7M" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="HK3vJP" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="WUTqtr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="RNWvd8" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="zTSZ1d" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="WrXqcT" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="PS3haV" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="YvDl0H" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
     </GROUP>
   </MAINGROUP>

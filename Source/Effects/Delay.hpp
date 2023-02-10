@@ -12,8 +12,6 @@
 #include "../Utils/Types.hpp"
 #include "Vibrato.hpp"
 
-#define MAX_DELAY_MS 2000.0
-
 class Delay {
 private:
   float sampleRate;
@@ -42,6 +40,10 @@ public:
   void setTimeMs(float timeMs);
   void setPan(float pan);
   void setMix(float mix);
+  
+  int getTimeSamps() {
+    return this->timeSamps;
+  }
 };
 
 #endif /* Delay_hpp */

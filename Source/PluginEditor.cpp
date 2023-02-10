@@ -11,7 +11,7 @@
 
 //==============================================================================
 DisperseAudioProcessorEditor::DisperseAudioProcessorEditor (DisperseAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), mainComponent(p)
 {
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
@@ -26,7 +26,7 @@ DisperseAudioProcessorEditor::~DisperseAudioProcessorEditor()
 //==============================================================================
 void DisperseAudioProcessorEditor::paint (juce::Graphics& g)
 {
-  g.fillAll(juce::Colours::black);
+  g.fillAll(juce::Colours::white);
   
   mainComponent.setBounds(getLocalBounds());
 }

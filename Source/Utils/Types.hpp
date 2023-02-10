@@ -12,22 +12,26 @@
 #include <iostream>
 #include <string>
 
-struct stereofloat : public std::pair<float, float> {
-public:
-  stereofloat(float L, float R) : std::pair<float, float>(L, R) {}
-  
-  operator std::string() const { return "(" + std::to_string(this->first) + "," + std::to_string(this->second) + ")"; }
+struct stereofloat {
+public :
+  float L;
+  float R;
 
-  float L() {
-    return this->first;
+  stereofloat(float L, float R) {
+    this->L = L;
+    this->R = R;
   }
   
-  float R() {
-    return this->second;
-  }
+  operator std::string() const { return "(" + std::to_string(L) + "," + std::to_string(R) + ")"; }
+
 };
+
+inline bool operator== (const stereofloat& s1, const stereofloat& s2) {
+  return s1.L == s2.L && s1.R == s2.R;
+}
 
 inline std::ostream & operator<<(std::ostream & Str, stereofloat const & v) {
   return Str << v.operator std::string();
 }
+
 #endif /* Types_hpp */

@@ -10,21 +10,18 @@
 stereofloat linearInterpolation(CircularBuffer<float> &buf, float idx) {
   
   if (idx == floor(idx)) {
-    return stereofloat(buf.readCircular(0, floorl(idx)), buf.readCircular(1, floorl(idx)));
+    return buf.readCircular(floorl(idx));
   }
   
   long lowerIdx = floorl(idx);
   
   float decimal = idx - lowerIdx;
   
-  float lowerSampleL = buf.readCircular(0, (int)lowerIdx);
-  float upperSampleL = buf.readCircular(0, (int)lowerIdx+1);
-
-  float lowerSampleR = buf.readCircular(1, (int)lowerIdx);
-  float upperSampleR = buf.readCircular(1, (int)lowerIdx+1);
+  stereofloat lowerSample = buf.readCircular((int)lowerIdx);
+  stereofloat upperSample = buf.readCircular((int)lowerIdx+1);
   
-  float L = lowerSampleL + (upperSampleL - lowerSampleL) * decimal;
-  float R = lowerSampleR + (upperSampleR - lowerSampleR) * decimal;
+  float L = lowerSample.L + (upperSample.L - lowerSample.L) * decimal;
+  float R = lowerSample.R + (upperSample.R - lowerSample.R) * decimal;
 
   return stereofloat(L, R);
 
@@ -53,19 +50,15 @@ stereofloat cubicInterpolation(CircularBuffer<float> &buf, float idx) {
   int intIdx = floorl(idx);
   float x = idx - intIdx;
   
-  float y0L = buf.readCircular(0, intIdx-1);
-  float y1L = buf.readCircular(0, intIdx);
-  float y2L = buf.readCircular(0, intIdx+1);
-  float y3L = buf.readCircular(0, intIdx+2);
+  stereofloat y0 = buf.readCircular(intIdx-1);
+  stereofloat y1 = buf.readCircular(intIdx);
+  stereofloat y2 = buf.readCircular(intIdx+1);
+  stereofloat y3 = buf.readCircular(intIdx+2);
 
-  float y0R = buf.readCircular(1, intIdx-1);
-  float y1R = buf.readCircular(1, intIdx);
-  float y2R = buf.readCircular(1, intIdx+1);
-  float y3R = buf.readCircular(1, intIdx+2);
 
   return stereofloat(
-                     calcCubicInterpolation(y0L, y1L, y2L, y3L, x),
-                     calcCubicInterpolation(y0R, y1R, y2R, y3R, x)
+                     calcCubicInterpolation(y0.L, y1.L, y2.L, y3.L, x),
+                     calcCubicInterpolation(y0.R, y1.R, y2.R, y3.R, x)
                      );
 }
 

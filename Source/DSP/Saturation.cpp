@@ -8,11 +8,11 @@
 #include "Saturation.hpp"
 
 #include <math.h>
-#include <algorithm>
 
 
+static double c;
 double softClip(double x, double p) {
-  double c = std::max(-p, std::min(p, x));
+  c = (x > p ? p : (x < -p ? -p : x));
   
   return c + tanh((x - c) / (1.0 - p)) * (1.0 - p);
 }

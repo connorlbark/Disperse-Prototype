@@ -16,7 +16,8 @@ class Delay {
 private:
   float sampleRate;
   
-  CircularBuffer<float> buf;
+  CircularBuffer buf;
+  
   Vibrato vibrato;
   
   float feedback;
@@ -25,14 +26,14 @@ private:
   
   float mix;
 
-  stereofloat fxLoop(stereofloat in);
+  stereofloat &fxLoop(stereofloat &in);
 public:
   Delay();
   Delay(float sampleRate, float maxTimeMs);
 
   void initialize(float sampleRate, float maxTimeMs);
   
-  stereofloat process(stereofloat in);
+  stereofloat &process(stereofloat &in);
   
   void setModDepth(float depth);
   void setModRate(float hz);

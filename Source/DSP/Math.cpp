@@ -7,23 +7,33 @@
 
 #include "Math.hpp"
 
-stereofloat linearInterpolation(CircularBuffer<float> &buf, float idx) {
+
+static int lowerIdx;
+static float decimal;
+static stereofloat lowerSample;
+static stereofloat upperSample;
+static stereofloat linOut;
+
+stereofloat &linearInterpolation(CircularBuffer &buf, float idx) {
   
-  if (idx == floor(idx)) {
-    return buf.readCircular(floorl(idx));
+  lowerIdx = (int)idx;
+
+  if (idx == lowerIdx) {
+    linOut = buf.readCircular(lowerIdx);
+    return linOut;
   }
   
-  long lowerIdx = floorl(idx);
   
-  float decimal = idx - lowerIdx;
+  decimal = idx - lowerIdx;
   
-  stereofloat lowerSample = buf.readCircular((int)lowerIdx);
-  stereofloat upperSample = buf.readCircular((int)lowerIdx+1);
+  lowerSample = buf.readCircular(lowerIdx);
+  upperSample = buf.readCircular(lowerIdx+1);
   
-  float L = lowerSample.L + (upperSample.L - lowerSample.L) * decimal;
-  float R = lowerSample.R + (upperSample.R - lowerSample.R) * decimal;
+  linOut.L = lowerSample.L + (upperSample.L - lowerSample.L) * decimal;
+  linOut.R = lowerSample.R + (upperSample.R - lowerSample.R) * decimal;
 
-  return stereofloat(L, R);
+  
+  return linOut;
 
 }
 
@@ -46,7 +56,7 @@ float calcCubicInterpolation(
 
 
 
-stereofloat cubicInterpolation(CircularBuffer<float> &buf, float idx) {
+stereofloat cubicInterpolation(CircularBuffer &buf, float idx) {
   int intIdx = floorl(idx);
   float x = idx - intIdx;
   

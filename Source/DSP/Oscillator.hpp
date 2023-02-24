@@ -10,10 +10,12 @@
 
 #include <JuceHeader.h>
 
+
+
 class Oscillator {
 public:
   Oscillator() {
-    this->oscFunction = [](float x) { return std::sinf(x); };
+    this->oscFunction = &std::sinf;
     this->oscRange = juce::MathConstants<float>::twoPi;
   }
 
@@ -23,14 +25,14 @@ public:
       angleDelta = cyclesPerSample * this->oscRange;
   }
   
-  forcedinline float getNextSample() noexcept
+  float getNextSample() noexcept
   {
       auto currentSample = this->oscFunction (currentAngle);
       updateAngle();
       return currentSample;
   }
   
-  forcedinline void updateAngle() noexcept
+  void updateAngle() noexcept
   {
       currentAngle += angleDelta;
       if (currentAngle >= this->oscRange)
@@ -40,7 +42,7 @@ public:
 private:
   float currentAngle = 0.0f, angleDelta = 0.0f;
   
-  std::function<float(float)> oscFunction;
+  float(*oscFunction)(float);
   float oscRange;
 
 };

@@ -36,6 +36,8 @@ private:
   juce::AudioParameterFloat* dispersion;
   juce::AudioParameterInt* numVoices;
   juce::AudioParameterInt* seed;
+  
+  juce::AudioBuffer<float> inputBuffer;
 
 public:
   

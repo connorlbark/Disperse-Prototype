@@ -114,6 +114,7 @@ void DisperseAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     // initialisation that you need..
   
   this->sampleRate = sampleRate;
+  this->inputBuffer = juce::AudioBuffer<float>(2, samplesPerBlock);
     
   std::cout << "Running tests!" << std::endl;
   juce::UnitTestRunner testRunner;
@@ -165,7 +166,8 @@ void DisperseAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
-
+  
+    this->inputBuffer.makeCopyOf(buffer, true);
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -182,11 +184,16 @@ void DisperseAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
 
+    stereofloat input;
+    stereofloat output;
     for (int i = 0; i < buffer.getNumSamples(); i++) {
-      stereofloat val = this->effect.process(stereofloat(buffer.getSample(0, i), buffer.getSample(1, i)));
+      input.L = buffer.getSample(0, i);
+      input.R = buffer.getSample(1, i);
+      
+      output = this->effect.process(input);
             
-      buffer.setSample(0, i, val.L);
-      buffer.setSample(1, i, val.R);
+      buffer.setSample(0, i, output.L);
+      buffer.setSample(1, i, output.R);
     }
 
 }

@@ -11,23 +11,26 @@
 Vibrato::Vibrato() : buf(0) {}
 
 void Vibrato::initialize(int maxSampsDepth) {
-  this->buf = CircularBuffer<float>(maxSampsDepth);
+  this->buf = CircularBuffer(maxSampsDepth);
 }
 
-stereofloat Vibrato::process(stereofloat in) {
+static float oscVal;
+static float modulation;
+static float delay;
+static float depthSamps;
 
-  float osc = this->osc.getNextSample();
+stereofloat Vibrato::process(stereofloat &in) {
+
+  oscVal = this->osc.getNextSample();
   
-  float modulation = ((osc + 1.f) / 2.f);
+  modulation = ((oscVal + 1.f) / 2.f);
   // modulation from [0.f, this->depth]
-  float depthSamps = this->depth * (this->buf.getNumSamples()) + 1.f;
+  depthSamps = this->depth * (this->buf.getNumSamples()) + 1.f;
 
-  float delay = depthSamps / 2.f + modulation * depthSamps / 2.f;
-  this->buf.writeCircular(in.L, in.R);
-  stereofloat out = linearInterpolation(this->buf, delay);
+  delay = depthSamps / 2.f + modulation * depthSamps / 2.f;
 
-  return out;
-//  return stereofloat(this->buf.readCircular(0, 800), this->buf.readCircular(1, 800));
+  this->buf.writeCircular(in);
+  return linearInterpolation(this->buf, delay);
 }
 
 void Vibrato::setSpeed(float sampleRate, float hz) {

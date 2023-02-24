@@ -57,7 +57,7 @@ public:
   
   void initialize(float sampleRate, int seed);
   
-  stereofloat process(stereofloat in);
+  stereofloat &process(stereofloat &in);
   
   // these opeartions will completely recreate the delays
   // (i.e., are not 'simple'

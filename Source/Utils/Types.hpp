@@ -16,7 +16,13 @@ struct stereofloat {
 public :
   float L;
   float R;
+  
+  stereofloat() {
+    this->L = 0.f;
+    this->R = 0.f;
+  }
 
+  
   stereofloat(float L, float R) {
     this->L = L;
     this->R = R;

@@ -14,7 +14,7 @@
 #include "../DSP/Oscillator.hpp"
 
 class Vibrato {
-  CircularBuffer<float> buf;
+  CircularBuffer buf;
   
   float depth; // 0.0 to 1.0
   
@@ -25,7 +25,7 @@ public:
   
   void initialize(int maxSampsDepth);
   
-  stereofloat process(stereofloat right);
+  stereofloat process(stereofloat &in);
   
   void setOscillator(Oscillator);
   void setSpeed(float sampleRate, float hz);

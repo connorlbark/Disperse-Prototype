@@ -156,26 +156,27 @@ void Disperse::setVoiceArrangement(std::vector<int> arrangement) {
 }
 
 
-stereofloat Disperse::process(stereofloat in) {
-  stereofloat wet = stereofloat(0.0, 0.0);
+static stereofloat wet;
+static stereofloat disperseOut;
+static stereofloat serial;
+
+stereofloat &Disperse::process(stereofloat &in) {
+  wet.L = 0.f;
+  wet.R = 0.f;
   
-  
-//  std::cout << "start. " << this->delays.size() << std::endl;
-  std::vector<std::vector<std::shared_ptr<Delay>>>::iterator parallelIt;
-  for (parallelIt = this->delays.begin(); parallelIt != this->delays.end(); ++parallelIt){
-      
-//    std::cout << "Parallel Delays!" << std::endl;
-    
-    stereofloat serialVal = stereofloat(in.L, in.R);
-    std::vector<std::shared_ptr<Delay>>::iterator serialIt;
-    for (serialIt = parallelIt->begin(); serialIt != parallelIt->end(); ++serialIt){
-      
-      serialVal = serialIt->get()->process(serialVal);
+  for (int parallelIdx = 0; parallelIdx < this->arrangement.size(); parallelIdx++) {
+    serial.L = in.L;
+    serial.R = in.R;
+    for (int serialIdx = 0; serialIdx < this->arrangement.at(parallelIdx); serialIdx++) {
+      serial = this->delays.at(parallelIdx).at(serialIdx)->process(serial);
     }
     
-    wet = stereofloat(serialVal.L/this->arrangement.size() + wet.L, serialVal.R/this->arrangement.size() + wet.R
-                      );
+    wet.L += serial.L;
+    wet.R += serial.R;
   }
-    
-  return stereofloat((in.L + wet.L) / 2.0, (in.R + wet.R)/ 2.0);
+  
+  
+  disperseOut.L = wet.L * mix + in.L * (1-mix);
+  disperseOut.R = wet.R * mix + in.R * (1-mix);
+  return disperseOut;
 }

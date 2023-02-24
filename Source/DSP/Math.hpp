@@ -12,23 +12,30 @@
 #include "CircularBuffer.hpp"
 #include <JuceHeader.h>
 #include <math.h>
-#include <algorithm>
 
-stereofloat linearInterpolation(CircularBuffer<float> &buf, float idx);
-stereofloat cubicInterpolation(CircularBuffer<float> &buf, float idx);
+stereofloat &linearInterpolation(CircularBuffer &buf, float idx);
+stereofloat cubicInterpolation(CircularBuffer &buf, float idx);
 
 
 inline int msToSamps(float sampleRate, float ms) {
   return ceil(sampleRate * (ms / 1000.f));
 }
 
-inline stereofloat sinPan(stereofloat in, float pan) {
 
-  float crossValue = (pan + 1.f) / 2.f;
+static float crossValue;
+static float gainL;
+static float gainR;
+static stereofloat out;
+
+inline stereofloat &sinPan(stereofloat &in, float pan) {
+
+  crossValue = (pan + 1.f) / 2.f;
   
-  float gainL = sin((1 - crossValue)*juce::MathConstants<float>::halfPi);
-  float gainR = sin(crossValue*juce::MathConstants<float>::halfPi);
+  gainL = sin((1 - crossValue)*juce::MathConstants<float>::halfPi);
+  gainR = sin(crossValue*juce::MathConstants<float>::halfPi);
 
-  return stereofloat(in.L * gainL, in.R * gainR);
+  out.L = in.L * gainL;
+  out.R = in.R * gainR;
+  return out;
 }
 #endif /* Math_hpp */

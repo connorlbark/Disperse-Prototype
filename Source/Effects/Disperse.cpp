@@ -22,18 +22,21 @@ void Disperse::initialize(float sampleRate, int seed) {
 };
 
 
+static std::mt19937 gen;
+static std::uniform_real_distribution<> dist;
 float Disperse::getRandomUniform(int parallelIdx, int seriesIdx, int paramIdx) {
-  std::mt19937 gen(this->seed * this->simpleParamHash(parallelIdx, seriesIdx, paramIdx));
-  std::uniform_real_distribution<> dist(-1, 1);
+  gen = std::mt19937(this->seed * this->simpleParamHash(parallelIdx, seriesIdx, paramIdx));
+  dist = std::uniform_real_distribution<>(-1, 1);
 
   return dist(gen);
 }
 
+static int serialMax;
 void Disperse::resetDelays() {
   this->delays.clear();
   
   for (int parallelIdx = 0; parallelIdx < this->arrangement.size(); parallelIdx++) {
-    int serialMax = this->arrangement.at(parallelIdx);
+    serialMax = this->arrangement.at(parallelIdx);
     
     std::vector<std::shared_ptr<Delay>> serialDelays;
     for (int serialIdx = 0; serialIdx < serialMax; serialIdx++) {
@@ -46,13 +49,13 @@ void Disperse::resetDelays() {
   updateAllRandomParams();
 }
 
-void Disperse::updateDelays(std::function< void(std::shared_ptr<Delay>, int, int) > lambda) {
+void Disperse::updateDelays(void(Disperse::*update)(std::shared_ptr<Delay>, int, int)) {
   for (int parallelIdx = 0; parallelIdx < this->delays.size(); parallelIdx ++) {
     std::vector<std::shared_ptr<Delay>> serialDelays = this->delays.at(parallelIdx);
     
     for (int serialIdx = 0; serialIdx < serialDelays.size(); serialIdx++) {
       
-      lambda(serialDelays.at(serialIdx), parallelIdx, serialIdx);
+      (this->*update)(serialDelays.at(serialIdx), parallelIdx, serialIdx);
 
     }
     
@@ -60,9 +63,9 @@ void Disperse::updateDelays(std::function< void(std::shared_ptr<Delay>, int, int
 }
 
 void Disperse::updateAllRandomParams() {
-  updateFeedback();
-  updateTimeMs();
-  updatePan();
+  this->updateDelays(&Disperse::updateDelayFeedback);
+  this->updateDelays(&Disperse::updateDelayTimeMs);
+  this->updateDelays(&Disperse::updateDelayPan);
 }
 
 
@@ -84,12 +87,12 @@ void Disperse::setMix(float mix) {
 
 void Disperse::setFeedback(float feedback) {
   this->feedback = feedback;
-  updateFeedback();
+  this->updateDelays(&Disperse::updateDelayFeedback);
 }
 
 void Disperse::setTimeMs(float timeMs) {
   this->timeMs = timeMs;
-  updateTimeMs();
+  this->updateDelays(&Disperse::updateDelayTimeMs);
 }
 
 void Disperse::setSpread(float spread) {
@@ -101,47 +104,43 @@ void Disperse::setDispersion(float dispersion) {
   updateDispersion();
 }
 
-void Disperse::updateFeedback() {
-  this->updateDelays([&](std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
-    float randValue = this->getRandomUniform(parallelIdx, serialIdx, FEEDBACK_IDX);
-    
-    randValue *= MAX_FEEDBACK_SPREAD;
-    randValue *= this->dispersion;
 
-    delay->setFeedback(this->feedback + randValue);
-  });
+
+static float randValue;
+void Disperse::updateDelayFeedback(std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
+  randValue = this->getRandomUniform(parallelIdx, serialIdx, FEEDBACK_IDX);
+  
+  randValue *= MAX_FEEDBACK_SPREAD;
+  randValue *= this->dispersion;
+
+  delay->setFeedback(this->feedback + randValue);
 }
 
-void Disperse::updateTimeMs() {
-  this->updateDelays([&](std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
-    float randValue = this->getRandomUniform(parallelIdx, serialIdx, TIME_IDX);
-    
-    randValue *= MAX_TIME_SPREAD;
+void Disperse::updateDelayTimeMs(std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
+  randValue = this->getRandomUniform(parallelIdx, serialIdx, TIME_IDX);
+  
+  randValue *= MAX_TIME_SPREAD;
 
-    randValue *= this->dispersion;
-    delay->setTimeMs(this->timeMs + randValue);
-  });
+  randValue *= this->dispersion;
+  delay->setTimeMs(this->timeMs + randValue);
 }
 
-void Disperse::updatePan() {
-  this->updateDelays([&](std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
-    float randValue = this->getRandomUniform(parallelIdx, serialIdx, PAN_IDX);
-    
-    randValue *= MAX_PAN_SPREAD;
-    randValue *= this->spread;
+void Disperse::updateDelayPan(std::shared_ptr<Delay> delay, int parallelIdx, int serialIdx) {
+  randValue = this->getRandomUniform(parallelIdx, serialIdx, PAN_IDX);
+  
+  randValue *= MAX_PAN_SPREAD;
+  randValue *= this->spread;
 
-    delay->setPan(randValue);
-  });
-
+  delay->setPan(randValue);
 }
 
 void Disperse::updateSpread() {
-  updatePan();
+  this->updateDelays(&Disperse::updateDelayPan);
 }
 
 void Disperse::updateDispersion() {
-  updateTimeMs();
-  updateFeedback();
+  this->updateDelays(&Disperse::updateDelayTimeMs);
+  this->updateDelays(&Disperse::updateDelayFeedback);
 
 }
 

@@ -41,11 +41,11 @@ private:
     return (paramIdx * MAX_PARALLEL * MAX_SERIES) + (seriesIdx * MAX_PARALLEL) + parallelIdx;
   };
   
-  void updateDelays(std::function< void(std::shared_ptr<Delay>, int, int) > lambda);
+  void updateDelays(void(Disperse::*)(std::shared_ptr<Delay>, int, int));
   
-  void updateFeedback();
-  void updateTimeMs();
-  void updatePan();
+  void updateDelayFeedback(std::shared_ptr<Delay>, int, int);
+  void updateDelayTimeMs(std::shared_ptr<Delay>, int, int);
+  void updateDelayPan(std::shared_ptr<Delay>, int, int);
 
   void updateSpread();
   void updateDispersion();
@@ -70,6 +70,12 @@ public:
   void setTimeMs(float);
   void setSpread(float);
   void setDispersion(float);
+  
+  float getMix();
+  float getFeedback();
+  float getTimeMs();
+  float getSpread();
+  float getDispersion();
 };
 
 #endif /* Disperse_hpp */

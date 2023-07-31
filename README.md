@@ -6,7 +6,8 @@ delay -- the bloom of a reverb and the rhythm of a tape delay.
 Ideal for guitar / plucky instruments.
 
 Currently, I am re-writing this code from scratch to work in a VST format
-as well as guitar pedal format.
+as well as guitar pedal format. The code in this repo is just the early
+prototype version.
 
 ## Development TODOs
 Needs
